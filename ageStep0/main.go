@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -17,7 +18,8 @@ func main() {
 		encodeResponse(w, calculateAgeResponse{age, ""})
 	})
 
-	http.ListenAndServe(":8000", nil)
+	fmt.Println("aaa")
+	fmt.Printf("%v", http.ListenAndServe(":8000", nil))
 }
 
 func decodeAgeRequest(r *http.Request) (interface{}, error) {
