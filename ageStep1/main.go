@@ -1,17 +1,17 @@
 package main
 
 import (
-  "encoding/json"
-  "log"
+	"encoding/json"
+	"log"
 	"net/http"
 
-  httptransport "github.com/go-kit/kit/transport/http"
-  "golang.org/x/net/context"
+	httptransport "github.com/go-kit/kit/transport/http"
+	"golang.org/x/net/context"
 )
 
 func main() {
 	ctx := context.Background()
-  as := ageService{}
+	as := ageService{}
 
 	ageHandler := httptransport.NewServer(
 		ctx,
@@ -21,7 +21,7 @@ func main() {
 	)
 
 	http.Handle("/age", ageHandler)
-  log.Fatal(http.ListenAndServe(":8001", nil))
+	log.Fatal(http.ListenAndServe(":8001", nil))
 }
 
 func decodeAgeRequest(_ context.Context, r *http.Request) (interface{}, error) {

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"golang.org/x/net/context"
 	"github.com/go-kit/kit/endpoint"
+	"golang.org/x/net/context"
 )
 
 func makeCalculateAgeEndpoint(as AgeService) endpoint.Endpoint {

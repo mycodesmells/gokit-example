@@ -1,20 +1,20 @@
 package main
 
 import (
-  "encoding/json"
+	"encoding/json"
 	"net/http"
 )
 
 func main() {
-  as := ageService{}
+	as := ageService{}
 
 	http.HandleFunc("/age", func(w http.ResponseWriter, req *http.Request) {
 		request, _ := decodeAgeRequest(req)
-    ageRequest := request.(calculateAgeRequest)
+		ageRequest := request.(calculateAgeRequest)
 
-    age, _ := as.CalculateAge(ageRequest.YearOfBirth)
+		age, _ := as.CalculateAge(ageRequest.YearOfBirth)
 
-    encodeResponse(w, calculateAgeResponse{age, ""})
+		encodeResponse(w, calculateAgeResponse{age, ""})
 	})
 
 	http.ListenAndServe(":8000", nil)

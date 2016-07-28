@@ -1,34 +1,35 @@
 package main
 
 import (
-  "encoding/json"
-  "github.com/go-kit/kit/log"
+	"encoding/json"
 	"net/http"
-  "os"
+	"os"
 
-  httptransport "github.com/go-kit/kit/transport/http"
-  "golang.org/x/net/context"
+	"github.com/go-kit/kit/log"
+
+	httptransport "github.com/go-kit/kit/transport/http"
+	"golang.org/x/net/context"
 )
 
 func main() {
-  logger := log.NewLogfmtLogger(os.Stderr)
+	logger := log.NewLogfmtLogger(os.Stderr)
 
 	ctx := context.Background()
 
-  as := ageService{}
-  // var ageEndpoint endpoint.Endpoint
-  ageEndpoint := makeCalculateAgeEndpoint(as)
-  ageEndpoint = loggingMiddleware(log.NewContext(logger).With("method", "CalculateAge"))(ageEndpoint)
+	as := ageService{}
+	// var ageEndpoint endpoint.Endpoint
+	ageEndpoint := makeCalculateAgeEndpoint(as)
+	ageEndpoint = loggingMiddleware(log.NewContext(logger).With("method", "CalculateAge"))(ageEndpoint)
 
 	ageHandler := httptransport.NewServer(
 		ctx,
-    ageEndpoint,
+		ageEndpoint,
 		decodeAgeRequest,
 		encodeResponse,
 	)
 
 	http.Handle("/age", ageHandler)
-  logger.Log("msg", "HTTP", "addr", ":8002")
+	logger.Log("msg", "HTTP", "addr", ":8002")
 	logger.Log("err", http.ListenAndServe(":8002", nil))
 }
 
