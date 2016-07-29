@@ -18,7 +18,6 @@ func main() {
 		encodeResponse(w, calculateAgeResponse{age, ""})
 	})
 
-	fmt.Println("aaa")
 	fmt.Printf("%v", http.ListenAndServe(":8000", nil))
 }
 
